@@ -8,7 +8,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const SizedBox(height: 15.0),
             RaisedButtonIcon(
@@ -28,20 +28,22 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _showModal(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
+    showModalBottomSheet<void>(isScrollControlled: true,
+      shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      backgroundColor: Theme.of(context).copyWith(backgroundColor: Colors.grey[400]).backgroundColor,
+      context: context,enableDrag: true,
       builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          color: Colors.amber,
-          child: Center(
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          child: Form(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const Text('Modal BottomSheet'),
+                Text('Login'),
+                _buildEmailField(),
+                _buildPasswordField(),
                 ElevatedButton(
-                  child: const Text('Close BottomSheet'),
+                  child: const Text('Login'),
                   onPressed: () => Navigator.pop(context),
                 )
               ],
@@ -50,5 +52,32 @@ class LoginScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  _buildEmailField() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          border: OutlineInputBorder()
+        ),
+      
+      ),
+    );
+  }
+
+  _buildPasswordField() {
+     return Padding(
+       padding: const EdgeInsets.all(8.0),
+       child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+       decoration: InputDecoration(
+          border: OutlineInputBorder()
+        ),
+    ),
+     );
   }
 }
