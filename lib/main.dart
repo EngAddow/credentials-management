@@ -1,11 +1,46 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_app/src/ui/screens/login_screen.dart';
 
-void main() {
-  runApp(MyApp());
+
+import 'package:flutter/material.dart';
+import 'package:flutter_app/src/blocs/auth/auth_bloc.dart';
+import 'package:flutter_app/src/blocs/login/login_bloc.dart';
+import 'package:flutter_app/src/services/repositories/user_repository.dart';
+import 'package:flutter_app/src/ui/screens/home_screen.dart';
+import 'package:flutter_app/src/ui/screens/login_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class SimpleBlocDelegate extends BlocObserver {
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print(event);
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print(transition);
+  }
+
+  @override
+  void onError(Cubit bloc, Object error, StackTrace stacktrace) {
+    super.onError(bloc, error, stacktrace);
+    print(error);
+  }
 }
 
-class MyApp extends StatelessWidget {
+void main() {
+  Bloc.observer = SimpleBlocDelegate();
+
+  runApp(BlocProvider(
+    create: (context) => AuthenticationBloc()..add(AppStarted()),
+    child: RepositoryProvider(
+      create: (context) => UserRepository(),
+      child: CredentialsManagementApp(),
+    ),
+  ));
+}
+
+class CredentialsManagementApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -27,7 +62,29 @@ class MyApp extends StatelessWidget {
 
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: LoginScreen() //HomeScreen(),
+        home: BlocBuilder<AuthenticationBloc,AuthState>(
+          builder: (context,state)
+           =>state is Authenticated
+          ?HomeScreen()
+          : BlocProvider<LoginBloc>(
+            create: (context)=>LoginBloc(
+              authenticationBloc: context.read<AuthenticationBloc>(),
+              userRepository: context.read<UserRepository>(),
+              ),
+            child: LoginScreen(),
+            )
+          
+          
+          
+          //TODO:....
+          // =>state is Authenticated
+          // ?HomeScreen()
+          // :state is Unauthenticated
+          // ? LoginScreen()
+          // :SplashScreen(),
+          ),
+        
+        
         );
   }
 }
