@@ -48,7 +48,8 @@ class _LoginScreenState extends State<LoginScreen> {
       enableDrag: true,
       builder: (BuildContext context2) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          // padding: const EdgeInsets.symmetric(vertical: 15.0),
+          padding: MediaQuery.of(context).viewInsets,
           child: Form(
             key: _formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -58,17 +59,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text('Login'),
                 _buildEmailField(),
                 _buildPasswordField(),
-                BlocBuilder<LoginBloc, LoginState>(
-                  cubit: context.watch<LoginBloc>(),
+                BlocConsumer<LoginBloc, LoginState>(
+                  cubit: context.read<LoginBloc>(),
                   builder: (context, state) {
                     return ElevatedButton(
-                      child:  state is LoginIsInProgress
-                      ?const CircularProgressIndicator()
-                      : const Text('Login'),
+                      child: state is LoginIsInProgress
+                          ? const CircularProgressIndicator()
+                          : const Text('Login'),
                       onPressed: _validateAndLogin,
                     );
                   },
-                )
+                  listener: (context, state) {
+                    if (state is LoginSucces) {
+                      Navigator.maybePop(context2);
+                    }
+                  },
+                ),
               ],
             ),
           ),
@@ -108,12 +114,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _validateAndLogin() {
     if (_formKey.currentState.validate()) {
-      context.read<LoginBloc>().add( 
-        LoginWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-        ),
-        );
+      context.read<LoginBloc>().add(
+            LoginWithEmailAndPassword(
+              email: _emailController.text,
+              password: _passwordController.text,
+            ),
+          );
     }
   }
 }
