@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/blocs/login/login_bloc.dart';
 import 'package:flutter_app/src/common/utils.dart';
 import 'package:flutter_app/src/ui/widgets/raised_button_icon.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_auth/local_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             const SizedBox(height: 15.0),
             RaisedButtonIcon(
-              onPressed: () {},
+              onPressed:_fingerprint,
               icon: Icons.fingerprint,
               label: 'Login with fingerprint',
             ),
@@ -48,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
       enableDrag: true,
       builder: (BuildContext context2) {
         return Padding(
-          // padding: const EdgeInsets.symmetric(vertical: 15.0),
           padding: MediaQuery.of(context).viewInsets,
           child: Form(
             key: _formKey,
@@ -121,5 +123,15 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
     }
+  }
+
+  void _fingerprint() async{
+
+    var localAuth = LocalAuthentication();
+bool didAuthenticate =
+    await localAuth.authenticateWithBiometrics(
+        localizedReason: 'Please authenticate to show account balance');
+  log(didAuthenticate.toString());
+
   }
 }

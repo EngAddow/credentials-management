@@ -74,14 +74,6 @@ class CredentialsManagementApp extends StatelessWidget {
             child: LoginScreen(),
             )
           
-          
-          
-          //TODO:....
-          // =>state is Authenticated
-          // ?HomeScreen()
-          // :state is Unauthenticated
-          // ? LoginScreen()
-          // :SplashScreen(),
           ),
         
         

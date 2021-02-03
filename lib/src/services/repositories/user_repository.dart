@@ -7,8 +7,8 @@ class UserRepository {
     @required String password,
   }) async {
     return Future.delayed(
-      Duration(seconds: 5),
-      ()=>'token',
+      Duration(seconds: 1),
+      ()=>email+password,
     );
 
   }
