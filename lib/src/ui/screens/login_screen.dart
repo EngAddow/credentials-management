@@ -115,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _validateAndLogin() {
+  
     if (_formKey.currentState.validate()) {
       context.read<LoginBloc>().add(
             LoginWithEmailAndPassword(
