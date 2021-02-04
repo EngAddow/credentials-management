@@ -10,34 +10,32 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-
- LoginBloc({
+  LoginBloc({
     @required this.userRepository,
     @required this.authenticationBloc,
   })  : assert(userRepository != null),
         assert(authenticationBloc != null),
         super(LoginInitial());
 
-final UserRepository userRepository;
+  final UserRepository userRepository;
   final AuthenticationBloc authenticationBloc;
 
   @override
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    if(event is LoginWithEmailAndPassword){
+    if (event is LoginWithEmailAndPassword) {
       yield LoginIsInProgress();
       try {
-        var token = await userRepository.signIn(
+        final token = await userRepository.signIn(
           email: event.email,
           password: event.password,
         );
         authenticationBloc.add(LoggedIn(token));
         yield LoginSucces();
       } catch (error) {
-        yield LoginFailed(message:error);
+        yield LoginFailed(message: error.toString());
       }
     }
-    
   }
 }

@@ -15,9 +15,9 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
   Stream<AuthState> mapEventToState(
     AuthEvent event,
   ) async* {
-      // app start
+    // app start
     if (event is AppStarted) {
-      var token = await _getToken();
+      final token = await _getToken();
       if (token != '') {
         Storage().token = token;
         yield Authenticated();
@@ -39,7 +39,7 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
- /// delete from keystore/keychain
+  /// delete from keystore/keychain
   Future<void> _deleteToken() async {
     await Storage().secureStorage.delete(key: 'access_token');
   }
@@ -53,6 +53,4 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
   Future<String> _getToken() async {
     return await Storage().secureStorage.read(key: 'access_token') ?? '';
   }
-
-
 }

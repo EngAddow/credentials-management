@@ -8,16 +8,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-      int _selectedDestination = 0;
+  int _selectedDestination = 0;
 
   @override
   Widget build(BuildContext context) {
- final theme = Theme.of(context);
+    final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
     return Scaffold(
-     drawer: Drawer(
+      drawer: Drawer(
         child: ListView(
           // Important: Remove any padding from the ListView.
           // padding: EdgeInsets.zero,
@@ -29,36 +28,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: textTheme.headline6,
               ),
             ),
-            Divider(
+            const Divider(
               height: 1,
               thickness: 1,
             ),
             ListTile(
-              leading: Icon(Icons.favorite),
-              title: Text('Item 1'),
+              leading: const Icon(Icons.favorite),
+              title: const Text('Item 1'),
               selected: _selectedDestination == 0,
               onTap: () => selectDestination(0),
             ),
             ListTile(
-              leading: Icon(Icons.delete),
-              title: Text('Item 2'),
+              leading: const Icon(Icons.delete),
+              title: const Text('Item 2'),
               selected: _selectedDestination == 1,
               onTap: () => selectDestination(1),
             ),
             ListTile(
-              leading: Icon(Icons.label),
-              title: Text('Item 3'),
+              leading: const Icon(Icons.label),
+              title: const Text('Item 3'),
               selected: _selectedDestination == 2,
               onTap: () => selectDestination(2),
             ),
-            Divider(
+            const Divider(
               height: 1,
               thickness: 1,
             ),
-          
             ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Logout'),
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text('Logout'),
               selected: _selectedDestination == 3,
               onTap: () => _logout(context),
             ),

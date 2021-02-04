@@ -1,4 +1,4 @@
-
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/blocs/auth/auth_bloc.dart';
@@ -12,19 +12,19 @@ class SimpleBlocDelegate extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object event) {
     super.onEvent(bloc, event);
-    print(event);
+    log(event.toString());
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    print(transition);
+    log(transition.toString());
   }
 
   @override
   void onError(Cubit bloc, Object error, StackTrace stacktrace) {
     super.onError(bloc, error, stacktrace);
-    print(error);
+    log(error.toString());
   }
 }
 
@@ -45,38 +45,33 @@ class CredentialsManagementApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Credentials management app.',
-        theme: ThemeData(
-          primarySwatch: Colors.blueGrey,
+      title: 'Credentials management app.',
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
 
-          // Define the default font family.
-          fontFamily: 'Georgia',
+        // Define the default font family.
+        fontFamily: 'Georgia',
 
-          // Define the default TextTheme. Use this to specify the default
-          // text styling for headlines, titles, bodies of text, and more.
-          textTheme: TextTheme(
-            headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-            headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-            bodyText2: TextStyle(fontSize: 19.0, fontFamily: 'Hind'),
-          ),
-
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+        // Define the default TextTheme. Use this to specify the default
+        // text styling for headlines, titles, bodies of text, and more.
+        textTheme: const TextTheme(
+          headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+          headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          bodyText2: TextStyle(fontSize: 19.0, fontFamily: 'Hind'),
         ),
-        home: BlocBuilder<AuthenticationBloc,AuthState>(
-          builder: (context,state)
-           =>state is Authenticated
-          ?HomeScreen()
-          : BlocProvider<LoginBloc>(
-            create: (context)=>LoginBloc(
-              authenticationBloc: context.read<AuthenticationBloc>(),
-              userRepository: context.read<UserRepository>(),
-              ),
-            child: LoginScreen(),
-            )
-          
-          ),
-        
-        
-        );
+
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: BlocBuilder<AuthenticationBloc, AuthState>(
+          builder: (context, state) => state is Authenticated
+              ? HomeScreen()
+              : BlocProvider<LoginBloc>(
+                  create: (context) => LoginBloc(
+                    authenticationBloc: context.read<AuthenticationBloc>(),
+                    userRepository: context.read<UserRepository>(),
+                  ),
+                  child: LoginScreen(),
+                )),
+    );
   }
 }
