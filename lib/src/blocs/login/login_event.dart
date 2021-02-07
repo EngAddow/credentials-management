@@ -10,3 +10,11 @@ class LoginWithEmailAndPassword extends LoginEvent {
   List<Object> get props => [email,password];
 
 }
+class LoginWithFingerprint extends LoginEvent {
+  final bool authenticated;
+
+  LoginWithFingerprint({this.authenticated});
+  @override
+  List<Object> get props => [authenticated];
+  
+}

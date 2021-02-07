@@ -25,17 +25,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEvent event,
   ) async* {
     if (event is LoginWithEmailAndPassword) {
-      yield LoginIsInProgress();
-      try {
-        final token = await userRepository.signIn(
-          email: event.email,
-          password: event.password,
-        );
-        authenticationBloc.add(LoggedIn(token));
-        yield LoginSucces();
-      } catch (error) {
-        yield LoginFailed(message: error.toString());
-      }
+       yield LoginIsInProgress();
+    try {
+      final token = await userRepository.signIn(
+        email: event.email,
+        password: event.password,
+      );
+      authenticationBloc.add(LoggedIn(token));
+      yield LoginSucces();
+    } catch (error) {
+      yield LoginFailed(message: error.toString());
     }
+    }else if(event is LoginWithFingerprint){
+  authenticationBloc.add(LoggedIn('${event.authenticated}'));
+
+    }
+
   }
+
 }

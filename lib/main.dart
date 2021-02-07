@@ -45,6 +45,7 @@ class CredentialsManagementApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner:false ,
       title: 'Credentials management app.',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
@@ -58,6 +59,7 @@ class CredentialsManagementApp extends StatelessWidget {
           headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
           headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
           bodyText2: TextStyle(fontSize: 19.0, fontFamily: 'Hind'),
+           caption: TextStyle(fontSize: 16.0)
         ),
 
         visualDensity: VisualDensity.adaptivePlatformDensity,

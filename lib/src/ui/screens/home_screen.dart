@@ -18,8 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       drawer: Drawer(
         child: ListView(
-          // Important: Remove any padding from the ListView.
-          // padding: EdgeInsets.zero,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -33,20 +31,20 @@ class _HomeScreenState extends State<HomeScreen> {
               thickness: 1,
             ),
             ListTile(
-              leading: const Icon(Icons.favorite),
-              title: const Text('Item 1'),
+              leading: const Icon(Icons.remove_red_eye_outlined),
+              title: const Text('Credentials'),
               selected: _selectedDestination == 0,
               onTap: () => selectDestination(0),
             ),
             ListTile(
-              leading: const Icon(Icons.delete),
-              title: const Text('Item 2'),
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
               selected: _selectedDestination == 1,
               onTap: () => selectDestination(1),
             ),
             ListTile(
-              leading: const Icon(Icons.label),
-              title: const Text('Item 3'),
+              leading: const Icon(Icons.info_outlined),
+              title: const Text('About'),
               selected: _selectedDestination == 2,
               onTap: () => selectDestination(2),
             ),
